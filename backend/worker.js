@@ -17,7 +17,7 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers });
     const url = new URL(request.url);
 
-    if (url.pathname === '/contact' && request.method === 'POST') {
+    if (url.pathname === '/api/contact' && request.method === 'POST') {
       const contentType = request.headers.get('content-type') || '';
       const payload = contentType.includes('application/json') ? await request.json() : Object.fromEntries(await request.formData());
       if (String(payload.website || '').trim()) return json({ ok: true }, 200, headers); // honeypot
@@ -30,7 +30,7 @@ export default {
       return json({ ok: true }, 201, headers);
     }
 
-    if (url.pathname === '/submissions' && request.method === 'GET') {
+    if (url.pathname === '/api/submissions' && request.method === 'GET') {
       const authorization = request.headers.get('authorization') || '';
       if (!env.ADMIN_TOKEN || authorization !== `Bearer ${env.ADMIN_TOKEN}`) return json({ error: 'Unauthorized' }, 401, headers);
       const limit = Math.min(Number(url.searchParams.get('limit') || 50), 200);

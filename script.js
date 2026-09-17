@@ -7,9 +7,14 @@ document.querySelectorAll('[data-placeholder]').forEach((link) => {
   });
 });
 
-const CONTACT_ENDPOINT = ''; // Add your hosted form endpoint here before launch.
-if (!CONTACT_ENDPOINT) document.querySelector('#contact-form button').firstChild.textContent = 'Open email draft ';
-document.querySelector('#contact-form .form-note').textContent = 'Your email app will open with a draft addressed to the 3rd Meridian team.';
+const CONTACT_ENDPOINT = '/api/contact';
+const contactFormNote = document.querySelector('#contact-form .form-note');
+if (!CONTACT_ENDPOINT) {
+  document.querySelector('#contact-form button').firstChild.textContent = 'Open email draft ';
+  contactFormNote.textContent = 'Your email app will open with a draft addressed to the 3rd Meridian team.';
+} else {
+  contactFormNote.textContent = 'Your inquiry is sent securely to the 3rd Meridian team.';
+}
 
 document.getElementById('contact-form').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -28,7 +33,7 @@ document.getElementById('contact-form').addEventListener('submit', async (event)
     const response = await fetch(CONTACT_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
     if (!response.ok) throw new Error('Request failed');
     event.currentTarget.reset();
-    status.textContent = 'Thanks — your message is on its way.';
+    status.textContent = 'Thanks — your inquiry has been received.';
   } catch {
     status.textContent = 'We could not send that message. Please use the email link above instead.';
   }

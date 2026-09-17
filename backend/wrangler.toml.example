@@ -5,8 +5,8 @@ compatibility_date = "2026-09-17"
 [[d1_databases]]
 binding = "DB"
 database_name = "third-meridian-submissions"
-database_id = "REPLACE_AFTER_CREATING_D1_DATABASE"
+database_id = "501441d2-923c-4e90-80a3-6d53cc2df9a5"
 
 [vars]
-ALLOWED_ORIGIN = "https://REPLACE_WITH_REAL_DOMAIN"
+ALLOWED_ORIGIN = "https://third-meridian-site.third-meridian.workers.dev"
 # Set ADMIN_TOKEN as a secret with: wrangler secret put ADMIN_TOKEN

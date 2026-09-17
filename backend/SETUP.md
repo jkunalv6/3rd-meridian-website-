@@ -2,7 +2,19 @@
 
 This is a small Cloudflare Worker + D1 backend. It stores names, work emails, optional phone numbers, messages, and submission timestamps. It does not send email.
 
-## Setup after the Cloudflare connector and domain are available
+## Current Cloudflare deployment
+
+- Website and API: `https://third-meridian-site.third-meridian.workers.dev`
+- Worker: `third-meridian-site`
+- D1 database: `third-meridian-submissions`
+- Public form endpoint: `POST /api/contact`
+- Region: APAC
+
+The website and contact backend are now hosted entirely on Cloudflare. GitHub remains the source repository only; its Pages deployment workflows have been removed.
+
+The remaining production step is attaching the purchased custom domain to the Worker.
+
+## Recreating the backend manually
 
 1. Connect the Cloudflare account to Codex, or install Wrangler and log in to the Cloudflare account.
 2. Copy `wrangler.toml.example` to `wrangler.toml`.
@@ -10,6 +22,6 @@ This is a small Cloudflare Worker + D1 backend. It stores names, work emails, op
 4. Run `wrangler d1 execute third-meridian-submissions --remote --file=schema.sql`.
 5. Set the administrator secret: `wrangler secret put ADMIN_TOKEN`.
 6. Set `ALLOWED_ORIGIN` to the final website origin.
-7. Deploy with `wrangler deploy` and copy the Worker URL into `CONTACT_ENDPOINT` in the website `script.js`.
+7. Deploy with `wrangler deploy`. The website uses the same-origin endpoint `/api/contact`.
 
-The public endpoint accepts only `POST /contact`. The private endpoint is `GET /submissions` with `Authorization: Bearer <ADMIN_TOKEN>`. Do not put the admin token in the website or a public repository. A simple private admin page can be added after the first deployment, or submissions can initially be viewed with Wrangler.
+The public endpoint accepts only `POST /api/contact`. The private scaffold endpoint is `GET /api/submissions` with `Authorization: Bearer <ADMIN_TOKEN>`. Do not put the admin token in the website or a public repository. Production submissions can also be inspected directly through the authenticated Cloudflare connector.
