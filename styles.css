@@ -56,10 +56,10 @@ main{display:flex;flex-direction:column}
 @media(max-width:800px){.feature-videos{padding-top:80px;padding-bottom:90px}.video-grid{grid-template-columns:1fr;gap:34px;margin-top:38px}}
 
 /* Review pass: workflow first, clearer engineering stories, and mobile-first video cards. */
-.relay-story{order:2}
-.relay-section{order:3}
-.case-library{order:4}
-.feature-videos{order:5}
+.relay-section{order:2}
+.relay-story{order:3}
+.feature-videos{order:4}
+.case-library{order:5}
 .download{order:6}
 .contact{order:7}
 .relay-story .section-label{margin-bottom:6px}
