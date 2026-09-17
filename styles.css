@@ -54,3 +54,34 @@ main{display:flex;flex-direction:column}
 .feature-videos{order:4;padding-top:110px;padding-bottom:120px}.feature-videos h2{font:600 clamp(38px,5vw,64px)/1.03 'Space Grotesk';letter-spacing:-.05em;margin:24px 0 14px}.video-intro{color:var(--muted);font-size:19px;max-width:580px;line-height:1.55}.video-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}.video-card h3{font:600 22px 'Space Grotesk';margin:22px 0 8px}.video-card p{color:var(--muted);font-size:15px;line-height:1.55;margin:0}.video-placeholder{aspect-ratio:16/10;border-radius:18px;background:linear-gradient(145deg,#16181c,#30343c);color:white;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:20px}.video-placeholder small{color:#aeb5c0;font-size:11px}.play-icon{width:42px;height:42px;border:1px solid #78b9ff;border-radius:50%;display:grid;place-items:center;color:#78b9ff;padding-left:3px;margin-bottom:8px}
 .download{order:5}.contact{order:6}
 @media(max-width:800px){.feature-videos{padding-top:80px;padding-bottom:90px}.video-grid{grid-template-columns:1fr;gap:34px;margin-top:38px}}
+
+/* Review pass: workflow first, clearer engineering stories, and mobile-first video cards. */
+.relay-story{order:2}
+.relay-section{order:3}
+.case-library{order:4}
+.feature-videos{order:5}
+.download{order:6}
+.contact{order:7}
+.relay-story .section-label{margin-bottom:6px}
+.privacy-note{border:1px solid #dfe8f4;background:#f6faff;border-radius:14px;padding:16px 18px;margin-top:28px;display:grid;gap:5px;font-size:14px;line-height:1.45}
+.privacy-note strong{color:var(--ink)}
+.privacy-note span{color:var(--muted)}
+.story-step>span:empty{display:none}
+.story-step h3{margin-top:12px}
+.scene-number{font:600 11px 'Space Grotesk';letter-spacing:.14em;text-transform:uppercase;color:#79b9ff}
+.video-placeholder{align-items:flex-start;text-align:left;justify-content:flex-end;min-height:230px;gap:10px;padding:24px}
+.video-placeholder>span:not(.scene-number){font:600 21px/1.15 'Space Grotesk';max-width:260px}
+.video-placeholder small{font-size:12px;line-height:1.45}
+.video-card p{display:none}
+@media(max-width:800px){
+  .relay-story{padding-top:72px}
+  .story-stage{position:relative;top:auto;margin-bottom:22px}
+  .story-layout{gap:28px}
+  .story-step{padding-bottom:48px}
+  .story-step h3{margin-top:12px}
+  .feature-videos{padding-top:76px;padding-bottom:84px}
+  .feature-videos .video-intro{font-size:17px}
+  .video-grid{grid-template-columns:1fr;gap:18px;margin-top:30px}
+  .video-placeholder{min-height:205px;aspect-ratio:auto;padding:20px}
+  .video-placeholder>span:not(.scene-number){font-size:20px}
+}
