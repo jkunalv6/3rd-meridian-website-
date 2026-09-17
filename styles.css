@@ -76,10 +76,10 @@
 @media(max-width:560px){.brand-name{font-size:11px}.meridian-scene{width:210%;margin-left:-95%;opacity:.84}.hero h1{font-size:clamp(47px,13vw,58px)}.hero-next{bottom:26px}}
 
 /* Keep mobile chrome solid and use drawn arrows so phones do not substitute emoji glyphs. */
-.arrow{display:inline-block;position:relative;width:13px;height:13px;flex:none;color:currentColor;font-size:0;line-height:0}
-.arrow-up-right:before{content:"";position:absolute;right:0;top:0;width:8px;height:8px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor}
-.arrow-up-right:after{content:"";position:absolute;right:1px;top:5px;width:11px;height:1.5px;background:currentColor;transform:rotate(-45deg);transform-origin:right center}
-.arrow-down{width:11px;height:11px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin:0 3px 5px 0}
+.arrow{display:inline-block;position:relative;width:18px;height:18px;flex:none;color:currentColor;font-size:0;line-height:0;overflow:visible}
+.arrow-up-right:before{content:"";position:absolute;right:3px;top:3px;width:8px;height:8px;border-top:1.5px solid currentColor;border-right:1.5px solid currentColor}
+.arrow-up-right:after{content:"";position:absolute;right:3px;top:8px;width:11px;height:1.5px;background:currentColor;transform:rotate(-45deg);transform-origin:right center}
+.arrow-down{width:14px;height:14px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin:0 3px 5px 0}
 .arrow-down-right{transform:rotate(90deg);margin-left:7px}
 @media(max-width:860px){
   .site-header,.site-header.is-scrolled,.site-header.menu-active{background:#02070b;backdrop-filter:none}
