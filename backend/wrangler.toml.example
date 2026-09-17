@@ -1,0 +1,12 @@
+name = "third-meridian-contact"
+main = "worker.js"
+compatibility_date = "2026-09-17"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "third-meridian-submissions"
+database_id = "REPLACE_AFTER_CREATING_D1_DATABASE"
+
+[vars]
+ALLOWED_ORIGIN = "https://REPLACE_WITH_REAL_DOMAIN"
+# Set ADMIN_TOKEN as a secret with: wrangler secret put ADMIN_TOKEN
