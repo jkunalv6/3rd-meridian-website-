@@ -57,12 +57,15 @@ main{display:flex;flex-direction:column}
 
 /* Review pass: workflow first, clearer engineering stories, and mobile-first video cards. */
 .relay-section{order:2}
-.relay-story{order:3}
-.feature-videos{order:4}
-.faq{order:5}
-.case-library{order:6}
-.download{order:7}
-.contact{order:8}
+.mission{order:1}
+.ecosystem-strip{order:2.5}
+.how{order:3}
+.relay-story{order:4}
+.feature-videos{order:5}
+.faq{order:6}
+.case-library{order:7}
+.download{order:8}
+.contact{order:9}
 .relay-story .section-label{margin-bottom:6px}
 .privacy-note{border:1px solid #dfe8f4;background:#f6faff;border-radius:14px;padding:16px 18px;margin-top:28px;display:grid;gap:5px;font-size:14px;line-height:1.45}
 .privacy-note strong{color:var(--ink)}

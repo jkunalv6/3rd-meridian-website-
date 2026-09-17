@@ -68,15 +68,22 @@ if (privacy && !privacy.querySelector('.privacy-note')) {
   privacy.appendChild(note);
 }
 const relayCardTitle = document.querySelector('.relay-card-copy h3');
-if (relayCardTitle) relayCardTitle.textContent = 'An engineering assistant that fits into the ecosystem you already have.';
+if (relayCardTitle) relayCardTitle.textContent = 'The work around the design is still part of the design.';
 const relayCardBody = document.querySelector('.relay-card-copy>p');
-if (relayCardBody) relayCardBody.textContent = 'Relay connects to CAD, Gmail, documents, and project context, then helps the engineer carry decisions, evidence, and next steps through the lifecycle. When a connector is unavailable, its own engineering repository and playbooks still give you a useful place to start.';
+if (relayCardBody) relayCardBody.textContent = 'Requirements arrive by email. Decisions disappear into documents. Test results sit apart from the drawing they explain. Relay brings that context back beside the engineer, then helps carry the decision, evidence, and next steps through the lifecycle.';
+const relayHeading = document.querySelector('.relay-heading h2');
+if (relayHeading) relayHeading.textContent = 'Meet Relay.';
+const relaySubheading = document.querySelector('.relay-heading p');
+if (relaySubheading) relaySubheading.textContent = 'An engineering assistant for the work around the work.';
 
 const ecosystem = document.createElement('section');
 ecosystem.className = 'ecosystem-strip wrap';
 ecosystem.innerHTML = '<div class="section-label">Built around your real work</div><div class="ecosystem-copy"><h2>Bring the stack you already trust.</h2><p>Relay sits across the engineering ecosystem instead of asking you to replace it.</p></div><div class="ecosystem-list"><span>CAD</span><span>Gmail</span><span>Documents</span><span>Requirements</span><span>Drawings</span><span>Test results</span><span>Engineering playbooks</span></div><p class="ecosystem-note">Connect what is available today. Use Relay’s repository and lifecycle playbooks even when a workspace connector is not yet available.</p>';
 const relaySection = document.querySelector('.relay-section');
 if (relaySection && !document.querySelector('.ecosystem-strip')) relaySection.insertAdjacentElement('afterend', ecosystem);
+
+const howHeading = document.querySelector('.how h2');
+if (howHeading) howHeading.textContent = 'The context follows the engineer.';
 
 const howSteps = [
   ['Connect the context', 'Bring the tools, files, messages, requirements, and decisions around a project into one working conversation.'],
