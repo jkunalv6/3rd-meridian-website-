@@ -116,3 +116,31 @@ main{display:flex;flex-direction:column}
   .faq-heading p{font-size:17px}
   .faq-list summary{font-size:17px;line-height:1.35}
 }
+
+/* Navigation and density pass. */
+main{display:flex;flex-direction:column}
+.nav{position:sticky;top:0;z-index:20;height:72px;background:#ffffffeb;backdrop-filter:blur(16px);border-bottom:1px solid #ffffff00}
+.hero{order:0;min-height:560px;padding-top:82px;padding-bottom:64px}
+.hero h1{max-width:780px}
+.mission{order:1;padding-top:78px;padding-bottom:86px}
+.relay-section{order:2;padding-top:78px;padding-bottom:88px}
+.ecosystem-strip{order:2.5;padding-top:64px;padding-bottom:68px}
+.how{order:3;padding-top:76px;padding-bottom:88px}
+.relay-story{order:4;padding-top:78px;padding-bottom:96px}
+.story-step{min-height:34vh;padding-bottom:42px}
+.feature-videos{order:5;padding-top:76px;padding-bottom:84px}
+.faq{order:6;padding-top:72px;padding-bottom:82px}
+.case-library{order:7;padding-top:78px;padding-bottom:88px}
+.download{order:8;padding-top:78px;padding-bottom:78px}
+.contact{order:9;padding-top:82px;padding-bottom:92px}
+.footer .brand{font-size:13px;letter-spacing:.06em}
+.contact h2{max-width:720px}
+@media(max-width:800px){
+  .nav{height:64px;padding-left:18px;padding-right:18px}
+  .brand{font-size:12px;letter-spacing:.06em}
+  .nav-cta{font-size:12px;padding:9px 11px}
+  .hero{min-height:520px;padding-top:62px;padding-bottom:56px}
+  .mission,.relay-section,.how,.relay-story,.feature-videos,.faq,.case-library,.download,.contact{padding-top:62px;padding-bottom:68px}
+  .story-step{min-height:0;padding-bottom:42px}
+  .contact h2{font-size:42px}
+}
