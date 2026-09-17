@@ -74,3 +74,10 @@
 @media(max-width:1120px){.nav-shell{display:flex}.desktop-nav{display:none}.nav-actions{margin-left:auto}.nav-contact{display:none}.menu-toggle{display:block}}
 @media(max-width:860px){.site-header{height:68px}.nav-shell{width:calc(100% - 40px)}.hero{padding-top:68px}.meridian-scene{width:155%;margin-left:-42%}.hero-vignette{background:linear-gradient(0deg,rgba(2,7,11,.96) 3%,rgba(2,7,11,.72) 48%,rgba(2,7,11,.2) 82%)}.hero-copy{padding-bottom:172px}}
 @media(max-width:560px){.brand-name{font-size:11px}.meridian-scene{width:210%;margin-left:-95%;opacity:.84}.hero h1{font-size:clamp(47px,13vw,58px)}.hero-next{bottom:26px}}
+
+/* Mobile navigation should read as a deliberate surface, not a translucent layer. */
+@media(max-width:860px){
+  .site-header.menu-active{background:#02070b;border-bottom-color:rgba(170,211,224,.2);backdrop-filter:none}
+  .mobile-menu{z-index:60;background:#02070b;isolation:isolate;border-top:1px solid rgba(170,211,224,.12);box-shadow:0 24px 48px rgba(0,0,0,.42)}
+  .mobile-menu a{background:#02070b}
+}
