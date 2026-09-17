@@ -1,0 +1,16 @@
+{
+  "name": "3rd Meridian",
+  "short_name": "3rd Meridian",
+  "description": "Engineering software for connected context, documentation, and design decisions.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f1e8",
+  "theme_color": "#111214",
+  "icons": [
+    {
+      "src": "/3rd-meridian-logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
