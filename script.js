@@ -99,6 +99,12 @@ if (videoSection) {
   videoSection.querySelector('.video-grid').innerHTML = videoData.map(([title, screen, direction], i) => `<article class="video-card"><div class="video-placeholder"><span class="scene-number">Scene ${i + 1}</span><span>${screen}</span><small>${direction}</small></div><h3>${title}</h3><p>${direction}</p></article>`).join('');
 }
 
+const faq = document.createElement('section');
+faq.className = 'faq wrap';
+faq.innerHTML = '<div class="section-label">Questions engineers ask</div><div class="faq-heading"><h2>Useful before you connect anything.</h2><p>Relay is designed to be useful on day one, while becoming more valuable as it understands the ecosystem around your work.</p></div><div class="faq-list"><details open><summary>What if my CAD, Gmail, or document connector is not available?</summary><p>Relay still works from its own engineering repository and lifecycle playbooks. Connectors make the answers more specific to your project; they are not a prerequisite for getting useful engineering context.</p></details><details><summary>Does Relay replace our systems of record?</summary><p>No. Your CAD, requirements, email, documents, and test systems remain the source of truth. Relay helps you find relationships, carry context, and document decisions across them.</p></details><details><summary>Does Relay make the engineering decision for me?</summary><p>No. Relay can frame a decision, compare options, surface missing evidence, and prepare documentation. The engineer remains responsible for judgment, approval, and consequential design changes.</p></details><details><summary>Where does our engineering data go?</summary><p>Relay is designed to work inside the workspace and access boundaries you control. Your project context is not treated as a public knowledge pool, and the product should make its evidence and source context visible.</p></details></div>';
+const downloadSection = document.querySelector('.download');
+if (downloadSection && !document.querySelector('.faq')) downloadSection.insertAdjacentElement('beforebegin', faq);
+
 document.querySelectorAll('body *').forEach((node) => {
   if (node.children.length === 0 && /\bMCP server\b/i.test(node.textContent)) node.textContent = node.textContent.replace(/MCP server/gi, 'engineering plugin');
 });

@@ -59,9 +59,10 @@ main{display:flex;flex-direction:column}
 .relay-section{order:2}
 .relay-story{order:3}
 .feature-videos{order:4}
-.case-library{order:5}
-.download{order:6}
-.contact{order:7}
+.faq{order:5}
+.case-library{order:6}
+.download{order:7}
+.contact{order:8}
 .relay-story .section-label{margin-bottom:6px}
 .privacy-note{border:1px solid #dfe8f4;background:#f6faff;border-radius:14px;padding:16px 18px;margin-top:28px;display:grid;gap:5px;font-size:14px;line-height:1.45}
 .privacy-note strong{color:var(--ink)}
@@ -73,6 +74,17 @@ main{display:flex;flex-direction:column}
 .ecosystem-list{display:flex;flex-wrap:wrap;gap:10px}
 .ecosystem-list span{border:1px solid var(--line);border-radius:999px;padding:11px 15px;color:#4d5056;font-size:13px;background:#fff}
 .ecosystem-note{border-left:2px solid var(--blue);padding-left:16px;color:var(--muted);font-size:14px;line-height:1.55;max-width:690px;margin:28px 0 0}
+.faq{padding-top:104px;padding-bottom:112px}
+.faq-heading{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin:22px 0 42px}
+.faq-heading h2{font:600 clamp(36px,4.5vw,58px)/1.04 'Space Grotesk';letter-spacing:-.05em;margin:0}
+.faq-heading p{color:var(--muted);font-size:18px;line-height:1.55;max-width:460px;margin:0}
+.faq-list{border-top:1px solid var(--line)}
+.faq-list details{border-bottom:1px solid var(--line);padding:20px 0}
+.faq-list summary{cursor:pointer;font:600 19px 'Space Grotesk';list-style:none;padding-right:28px;position:relative}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary::after{content:'+';position:absolute;right:0;color:var(--blue);font-size:24px;font-weight:400}
+.faq-list details[open] summary::after{content:'−'}
+.faq-list p{color:var(--muted);font-size:16px;line-height:1.6;max-width:760px;margin:14px 0 2px}
 .story-step>span:empty{display:none}
 .story-step h3{margin-top:12px}
 .scene-number{font:600 11px 'Space Grotesk';letter-spacing:.14em;text-transform:uppercase;color:#79b9ff}
@@ -96,4 +108,8 @@ main{display:flex;flex-direction:column}
   .ecosystem-copy p{font-size:17px}
   .ecosystem-list{gap:8px}
   .ecosystem-list span{padding:9px 12px;font-size:12px}
+  .faq{padding-top:72px;padding-bottom:78px}
+  .faq-heading{grid-template-columns:1fr;gap:18px;margin-bottom:28px}
+  .faq-heading p{font-size:17px}
+  .faq-list summary{font-size:17px;line-height:1.35}
 }
