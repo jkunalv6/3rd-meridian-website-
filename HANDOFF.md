@@ -118,7 +118,7 @@ Keep the existing logo motif: circular crosshair with a four-point center. The s
 - Replaced modal placeholder alerts with inline accessible status messages and marked download links as unavailable.
 - Updated launch copy to reflect that Relay is still in development.
 - Renamed the contact action to “Open email draft,” added autocomplete, a direct email fallback, and a status message. Actual delivery still depends on the visitor's email application; no message has been sent during testing.
-- Added noindex/nofollow for the private review phase. This is a crawler directive, not an access gate. Remove it only as part of an approved launch. Never include this internal HANDOFF.md in public deployment assets.
+- Replaced the private-review noindex directive with index/follow plus GitHub Pages canonical and social metadata for the public review site. Replace the canonical and social URL values when a final custom domain is connected. Never include this internal HANDOFF.md in public deployment assets.
 - Local preview: run `python -m http.server 8765 --bind 127.0.0.1` in this folder and visit http://127.0.0.1:8765. No hosting or publication has been performed.
 - Verification: JavaScript syntax check, public-file privacy and fragment checks, browser review at phone (375px), intermediate, and desktop (1440px) widths; expanded the sample brief and exercised all three placeholder links.
 - Still pending: supplied marketplace/repository URLs, recorded tutorial, confirmed launch integrations, and explicit publication request.
