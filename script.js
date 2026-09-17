@@ -8,8 +8,8 @@ document.querySelectorAll('[data-placeholder]').forEach((link) => {
 });
 
 const CONTACT_ENDPOINT = ''; // Add your hosted form endpoint here before launch.
-if (!CONTACT_ENDPOINT) document.querySelector('#contact-form button').firstChild.textContent = 'Send message ';
-document.querySelector('#contact-form .form-note').textContent = 'Messages will be stored securely for the 3rd Meridian team.';
+if (!CONTACT_ENDPOINT) document.querySelector('#contact-form button').firstChild.textContent = 'Open email draft ';
+document.querySelector('#contact-form .form-note').textContent = 'Your email app will open with a draft addressed to the 3rd Meridian team.';
 
 document.getElementById('contact-form').addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -17,7 +17,10 @@ document.getElementById('contact-form').addEventListener('submit', async (event)
   data.set('website', '');
   const status = document.getElementById('contact-status');
   if (!CONTACT_ENDPOINT) {
-    status.textContent = 'The form is ready, but its secure delivery service has not been connected yet. Please use the email link above for now.';
+    const subject = encodeURIComponent(`3rd Meridian enquiry from ${data.get('name')}`);
+    const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`);
+    window.location.href = `mailto:bluengineeringservices@gmail.com?subject=${subject}&body=${body}`;
+    status.textContent = 'Opening your email app with a prepared draft.';
     return;
   }
   status.textContent = 'Sending…';
