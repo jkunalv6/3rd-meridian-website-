@@ -18,7 +18,7 @@ document.getElementById('contact-form').addEventListener('submit', async (event)
   const status = document.getElementById('contact-status');
   if (!CONTACT_ENDPOINT) {
     const subject = encodeURIComponent(`Enterprise software conversation — ${data.get('name')}`);
-    const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\n\n${data.get('message')}`);
+    const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\nPhone: ${data.get('phone') || 'Not provided'}\n\n${data.get('message')}`);
     window.location.href = `mailto:bluengineeringservices@gmail.com?subject=${subject}&body=${body}`;
     status.textContent = 'Opening your email app with a prepared draft.';
     return;
