@@ -144,3 +144,67 @@ main{display:flex;flex-direction:column}
   .story-step{min-height:0;padding-bottom:42px}
   .contact h2{font-size:42px}
 }
+
+/* Full-width, lower-scroll layout following the end-to-end UX review. */
+.wrap{width:100%}
+section[id]{scroll-margin-top:92px}
+.nav{max-width:none;width:100%;margin:0;padding-left:max(32px,calc((100% - var(--max))/2 + 32px));padding-right:max(32px,calc((100% - var(--max))/2 + 32px));border-bottom-color:#e9eaed}
+.hero{order:0;min-height:580px;padding-top:74px;padding-bottom:66px}
+.hero h1{font-size:clamp(52px,6vw,78px);max-width:900px;margin-top:20px;margin-bottom:20px}
+.hero-copy{max-width:610px}
+.mission{display:none}
+.relay-section{order:1;padding-top:70px;padding-bottom:76px}
+.relay-heading{margin-bottom:32px}
+.relay-card{padding:42px;gap:48px}
+.ecosystem-strip{order:2;padding-top:56px;padding-bottom:60px}
+.how{order:3;padding-top:64px;padding-bottom:70px}
+.steps{margin-top:46px;gap:30px}
+.steps .step>span{display:none}
+.steps .step h3{margin-top:18px}
+.relay-story{order:4;padding-top:70px;padding-bottom:78px}
+.story-intro{margin-bottom:42px}
+.story-layout{grid-template-columns:minmax(0,1fr) minmax(420px,1fr);gap:42px}
+.story-steps{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0}
+.story-step{min-height:0;padding:20px;border:1px solid #343943;border-radius:14px;opacity:.62;cursor:pointer;transition:opacity .2s,border-color .2s,background .2s}
+.story-step:hover,.story-step.is-active{opacity:1;background:#181c22;border-color:#79b9ff88}
+.story-step h3{font-size:23px;margin:8px 0 10px}
+.story-step p{display:none;font-size:14px;margin:0}
+.story-step.is-active p{display:block}
+.story-stage{position:relative;top:auto}
+.faq{order:5;padding-top:60px;padding-bottom:66px}
+.faq-heading{margin-bottom:30px}
+.faq-list details{padding:17px 0}
+.case-library{order:6;padding-top:62px;padding-bottom:70px}
+.case-library .case-heading{margin-bottom:34px}
+.case-detail summary{padding:20px 24px}
+.download{order:7;padding-top:66px;padding-bottom:64px}
+.contact{order:8;padding-top:70px;padding-bottom:76px}
+.contact h2{font-size:clamp(40px,4vw,52px)}
+.contact>div:last-child>p{font-size:17px;line-height:1.5}
+.contact form{max-width:760px;grid-template-columns:1fr 1fr}
+.contact form label:last-of-type,.contact form button,.contact form .form-note,.contact form noscript{grid-column:1/-1}
+.contact textarea{min-height:112px}
+
+@media(max-width:800px){
+  .nav{padding-left:18px;padding-right:18px}
+  section[id]{scroll-margin-top:76px}
+  .hero{min-height:auto;padding-top:54px;padding-bottom:58px}
+  .hero h1{font-size:clamp(42px,12vw,58px);line-height:1.01}
+  .hero-actions{align-items:flex-start;flex-direction:column;gap:20px}
+  .relay-section,.ecosystem-strip,.how,.relay-story,.faq,.case-library,.download,.contact{padding-top:54px;padding-bottom:58px}
+  .relay-card{padding:24px}
+  .story-intro{margin-bottom:30px}
+  .story-layout{display:flex;flex-direction:column;gap:24px}
+  .story-steps{display:grid;grid-template-columns:1fr;gap:10px;order:2}
+  .story-step{padding:18px}
+  .story-step h3{font-size:22px}
+  .story-stage{position:relative;top:auto;order:1;margin:0;width:100%}
+  .case-detail summary{padding:19px}
+  .contact{gap:20px}
+  .contact h2{font-size:36px;line-height:1.02;margin-bottom:18px}
+  .contact p{font-size:17px;line-height:1.5}
+  .contact form{grid-template-columns:1fr}
+  .contact form{gap:12px}
+  .contact textarea{min-height:90px}
+  .contact form label:last-of-type,.contact form button,.contact form .form-note,.contact form noscript{grid-column:auto}
+}

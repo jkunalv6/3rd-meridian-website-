@@ -111,7 +111,7 @@ if (videoSection) {
 
 const faq = document.createElement('section');
 faq.className = 'faq wrap';
-faq.innerHTML = '<div class="section-label">Questions engineers ask</div><div class="faq-heading"><h2>Useful before you connect anything.</h2><p>Relay is designed to be useful on day one, while becoming more valuable as it understands the ecosystem around your work.</p></div><div class="faq-list"><details open><summary>What if my CAD, Gmail, or document connector is not available?</summary><p>Relay still works from its own engineering repository and lifecycle playbooks. Connectors make the answers more specific to your project; they are not a prerequisite for getting useful engineering context.</p></details><details><summary>Does Relay replace our systems of record?</summary><p>No. Your CAD, requirements, email, documents, and test systems remain the source of truth. Relay helps you find relationships, carry context, and document decisions across them.</p></details><details><summary>Does Relay make the engineering decision for me?</summary><p>No. Relay can frame a decision, compare options, surface missing evidence, and prepare documentation. The engineer remains responsible for judgment, approval, and consequential design changes.</p></details><details><summary>Where does our engineering data go?</summary><p>Relay is designed to work inside the workspace and access boundaries you control. Your project context is not treated as a public knowledge pool, and the product should make its evidence and source context visible.</p></details></div>';
+faq.innerHTML = '<div class="section-label">Questions engineers ask</div><div class="faq-heading"><h2>Useful before you connect anything.</h2><p>Relay is designed to be useful on day one, while becoming more valuable as it understands the ecosystem around your work.</p></div><div class="faq-list"><details><summary>What if my CAD, Gmail, or document connector is not available?</summary><p>Relay still works from its own engineering repository and lifecycle playbooks. Connectors make the answers more specific to your project; they are not a prerequisite for getting useful engineering context.</p></details><details><summary>Does Relay replace our systems of record?</summary><p>No. Your CAD, requirements, email, documents, and test systems remain the source of truth. Relay helps you find relationships, carry context, and document decisions across them.</p></details><details><summary>Does Relay make the engineering decision for me?</summary><p>No. Relay can frame a decision, compare options, surface missing evidence, and prepare documentation. The engineer remains responsible for judgment, approval, and consequential design changes.</p></details><details><summary>Where does our engineering data go?</summary><p>Relay is designed to work inside the workspace and access boundaries you control. Your project context is not treated as a public knowledge pool, and the product should make its evidence and source context visible.</p></details></div>';
 const downloadSection = document.querySelector('.download');
 if (downloadSection && !document.querySelector('.faq')) downloadSection.insertAdjacentElement('beforebegin', faq);
 
@@ -125,17 +125,32 @@ const stageCounter = document.querySelector('.stage-counter');
 const stageKicker = document.querySelector('.stage-kicker');
 const stageTitle = document.querySelector('.stage-copy strong');
 const stageProgress = document.querySelector('.stage-progress span');
-const sceneTitles = ['Engineering context, in one conversation.', 'Ask in the language of the problem.', 'Trace the change before it becomes rework.', 'The engineer stays in control.'];
+const sceneTitles = ['Your engineering ecosystem, in one conversation.', 'Documentation that keeps up with the design.', 'A veteran perspective at the right moment.', 'Engineering playbooks, even without every connector.'];
 if (story && storySteps.length) {
-  const observer = new IntersectionObserver((entries) => {
-    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (!visible) return;
-    const index = Number(visible.target.dataset.step);
-    storySteps.forEach((step) => step.classList.toggle('is-active', step === visible.target));
+  const activateStoryStep = (activeStep) => {
+    const index = Number(activeStep.dataset.step);
+    storySteps.forEach((step) => {
+      const isActive = step === activeStep;
+      step.classList.toggle('is-active', isActive);
+      step.setAttribute('aria-pressed', String(isActive));
+    });
     if (stageCounter) stageCounter.textContent = 'Workflow';
     if (stageKicker) stageKicker.textContent = 'SCENE';
     if (stageTitle) stageTitle.textContent = sceneTitles[index] || sceneTitles[0];
     if (stageProgress) stageProgress.style.width = `${((index + 1) / storySteps.length) * 100}%`;
-  }, { rootMargin: '-35% 0px -45% 0px', threshold: [0.2, 0.5, 0.8] });
-  storySteps.forEach((step) => observer.observe(step));
+  };
+
+  storySteps.forEach((step) => {
+    step.tabIndex = 0;
+    step.setAttribute('role', 'button');
+    step.addEventListener('click', () => activateStoryStep(step));
+    step.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      activateStoryStep(step);
+    });
+  });
+  activateStoryStep(storySteps[0]);
 }
+
+document.querySelectorAll('.case-detail').forEach((detail) => detail.removeAttribute('open'));
