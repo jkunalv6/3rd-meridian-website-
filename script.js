@@ -1,185 +1,119 @@
-const launchNote = document.getElementById('launch-note');
+const header = document.querySelector('[data-header]');
+const menuToggle = document.querySelector('[data-menu-toggle]');
+const mobileMenu = document.querySelector('[data-mobile-menu]');
+function closeMenu() {
+  menuToggle?.setAttribute('aria-expanded', 'false');
+  menuToggle?.setAttribute('aria-label', 'Open navigation');
+  header?.classList.remove('menu-active');
+  document.body.classList.remove('menu-open');
+}
 
-document.querySelectorAll('[data-placeholder]').forEach((link) => {
-  link.addEventListener('click', (event) => {
-    event.preventDefault();
-    launchNote.textContent = `The Relay link for ${link.dataset.placeholder} is not available yet. The link will appear here at launch.`;
+menuToggle?.addEventListener('click', () => {
+  const open = menuToggle.getAttribute('aria-expanded') !== 'true';
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  header?.classList.toggle('menu-active', open);
+  document.body.classList.toggle('menu-open', open);
+});
+
+mobileMenu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
+
+function updateHeader() { header?.classList.toggle('is-scrolled', window.scrollY > 16); }
+updateHeader();
+window.addEventListener('scroll', updateHeader, { passive: true });
+
+const hero = document.querySelector('.hero');
+if (hero && window.matchMedia('(pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  hero.addEventListener('pointermove', (event) => {
+    const bounds = hero.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * -18;
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * -12;
+    hero.style.setProperty('--hero-x', `${x.toFixed(2)}px`);
+    hero.style.setProperty('--hero-y', `${y.toFixed(2)}px`);
+  }, { passive: true });
+  hero.addEventListener('pointerleave', () => {
+    hero.style.setProperty('--hero-x', '0px');
+    hero.style.setProperty('--hero-y', '0px');
+  });
+}
+
+const chapters = [...document.querySelectorAll('[data-chapter]')];
+const stageMessage = document.querySelector('.stage-message');
+const stageKicker = document.querySelector('[data-stage-kicker]');
+const stageTitle = document.querySelector('[data-stage-title]');
+const stageCopy = document.querySelector('[data-stage-copy]');
+const stageCounter = document.querySelector('[data-stage-counter]');
+const stageProgress = document.querySelector('[data-stage-progress]');
+
+function activateChapter(chapter) {
+  const index = Number(chapter.dataset.chapter || 0);
+  chapters.forEach((item) => {
+    const active = item === chapter;
+    item.classList.toggle('is-active', active);
+    item.setAttribute('aria-selected', String(active));
+  });
+  stageMessage?.classList.add('is-changing');
+  window.setTimeout(() => {
+    if (stageKicker) stageKicker.textContent = chapter.dataset.kicker || '';
+    if (stageTitle) stageTitle.textContent = chapter.dataset.title || '';
+    if (stageCopy) stageCopy.textContent = chapter.dataset.copy || '';
+    if (stageCounter) stageCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(chapters.length).padStart(2, '0')}`;
+    if (stageProgress) stageProgress.style.width = `${((index + 1) / chapters.length) * 100}%`;
+    stageMessage?.classList.remove('is-changing');
+  }, 170);
+}
+
+chapters.forEach((chapter) => chapter.addEventListener('click', () => activateChapter(chapter)));
+
+document.querySelectorAll('.case-file').forEach((item) => {
+  item.addEventListener('toggle', () => {
+    if (!item.open) return;
+    document.querySelectorAll('.case-file[open]').forEach((openItem) => {
+      if (openItem !== item) openItem.removeAttribute('open');
+    });
   });
 });
 
-const CONTACT_ENDPOINT = '/api/contact';
-const contactFormNote = document.querySelector('#contact-form .form-note');
-if (!CONTACT_ENDPOINT) {
-  document.querySelector('#contact-form button').firstChild.textContent = 'Open email draft ';
-  contactFormNote.textContent = 'Your email app will open with a draft addressed to the 3rd Meridian team.';
-} else {
-  contactFormNote.textContent = 'Your inquiry is sent securely to the 3rd Meridian team.';
+const contactForm = document.getElementById('contact-form');
+const contactStatus = document.getElementById('contact-status');
+const isLocalPreview = location.protocol === 'file:' || ['localhost', '127.0.0.1'].includes(location.hostname);
+
+if (isLocalPreview) {
+  const note = contactForm?.querySelector('.form-note');
+  if (note) note.textContent = 'Local preview: submitting will open an email draft. Production saves inquiries securely.';
 }
 
-document.getElementById('contact-form').addEventListener('submit', async (event) => {
+contactForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  data.set('website', '');
-  const status = document.getElementById('contact-status');
-  if (!CONTACT_ENDPOINT) {
-    const subject = encodeURIComponent(`Enterprise software conversation — ${data.get('name')}`);
-    const body = encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\nPhone: ${data.get('phone') || 'Not provided'}\n\n${data.get('message')}`);
-    window.location.href = `mailto:bluengineeringservices@gmail.com?subject=${subject}&body=${body}`;
-    status.textContent = 'Opening your email app with a prepared draft.';
+  const button = contactForm.querySelector('button[type="submit"]');
+  const formData = new FormData(contactForm);
+  const original = button.innerHTML;
+  button.disabled = true;
+  button.textContent = 'Sending…';
+  if (contactStatus) contactStatus.textContent = '';
+
+  if (isLocalPreview) {
+    const subject = encodeURIComponent('3rd Meridian enterprise inquiry');
+    const body = encodeURIComponent(`Name: ${formData.get('name')}\nEmail: ${formData.get('email')}\nPhone: ${formData.get('phone') || 'Not provided'}\n\n${formData.get('message')}`);
+    location.href = `mailto:bluengineeringservices@gmail.com?subject=${subject}&body=${body}`;
+    button.disabled = false;
+    button.innerHTML = original;
     return;
   }
-  status.textContent = 'Sending…';
+
   try {
-    const response = await fetch(CONTACT_ENDPOINT, { method: 'POST', body: data, headers: { Accept: 'application/json' } });
-    if (!response.ok) throw new Error('Request failed');
-    event.currentTarget.reset();
-    status.textContent = 'Thanks — your inquiry has been received.';
-  } catch {
-    status.textContent = 'We could not send that message. Please use the email link above instead.';
+    const response = await fetch('/api/contact', { method: 'POST', body: formData, headers: { Accept: 'application/json' } });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || 'Unable to send your inquiry.');
+    contactForm.reset();
+    if (contactStatus) contactStatus.textContent = 'Inquiry received. We’ll be in touch.';
+  } catch (error) {
+    if (contactStatus) contactStatus.textContent = error.message || 'Unable to send right now. Please try again.';
+  } finally {
+    button.disabled = false;
+    button.innerHTML = original;
   }
 });
 
-// Review pass: put the workflow and engineering examples at the center of the story.
-const reviewLabel = (text) => text.replace(/^\d+\s*\/\s*/, '');
-document.querySelectorAll('.section-label').forEach((label) => { label.textContent = reviewLabel(label.textContent); });
-document.querySelectorAll('.story-step > span').forEach((step) => { step.textContent = ''; });
-
-const storyIntro = document.querySelector('.relay-story .story-intro');
-if (storyIntro) {
-  storyIntro.innerHTML = '<h2>Relay joins the ecosystem you already use.</h2><p>It connects to CAD, Gmail, documents, and project context—then works beside the engineer as a documentation partner, context finder, and sounding board throughout the design lifecycle.</p>';
-}
-
-const reviewStorySteps = [
-  ['Merge into the ecosystem', 'Relay brings CAD, Gmail, documents, requirements, drawings, test results, and project conversations into one working context. It does not ask the engineer to rebuild the workspace somewhere else.'],
-  ['Take care of the documentation', 'As the engineer works, Relay turns decisions, changes, evidence, and open questions into usable documentation. It helps prepare briefs, update records, and keep the story of the design from getting lost.'],
-  ['Sound like a veteran in the room', 'Relay brings relevant lifecycle playbooks, engineering patterns, trade-offs, and questions to the moment. Think of it as a veteran mechanical engineer you can consult while you are still exploring the problem.'],
-  ['Keep helping when connectors are missing', 'If a CAD, Gmail, or document connector is not available in a workspace, Relay still has its own repository of engineering knowledge and lifecycle playbooks. The ecosystem makes it richer; it is not the only source of value.']
-];
-document.querySelectorAll('.story-step').forEach((step, index) => {
-  const [title, copy] = reviewStorySteps[index] || reviewStorySteps[0];
-  step.querySelector('h3').textContent = title;
-  step.querySelector('p').textContent = copy;
-});
-const stageCopy = document.querySelector('.stage-copy');
-if (stageCopy) stageCopy.innerHTML = '<span class="stage-kicker">RELAY IN THE WORKSPACE</span><strong>Your engineering assistant, inside the work.</strong><small>Connect the ecosystem, document the journey, and keep a veteran sounding board close at every stage.</small>';
-const reviewStageCounter = document.querySelector('.stage-counter');
-if (reviewStageCounter) reviewStageCounter.textContent = 'Workflow';
-
-const privacy = document.querySelector('.relay-card-copy');
-if (privacy && !privacy.querySelector('.privacy-note')) {
-  const note = document.createElement('div');
-  note.className = 'privacy-note';
-  note.innerHTML = '<strong>Your engineering data stays private.</strong><span>Relay is a connector to your controlled workspace, not a public data pool. Your project context stays where you keep it and is used to answer your request.</span>';
-  privacy.appendChild(note);
-}
-const relayCardTitle = document.querySelector('.relay-card-copy h3');
-if (relayCardTitle) relayCardTitle.textContent = 'The work around the design is still part of the design.';
-const relayCardBody = document.querySelector('.relay-card-copy>p');
-if (relayCardBody) relayCardBody.textContent = 'Requirements arrive by email. Decisions disappear into documents. Test results sit apart from the drawing they explain. Relay brings that context back beside the engineer, then helps carry the decision, evidence, and next steps through the lifecycle.';
-const relayHeading = document.querySelector('.relay-heading h2');
-if (relayHeading) relayHeading.textContent = 'Meet Relay.';
-const relaySubheading = document.querySelector('.relay-heading p');
-if (relaySubheading) relaySubheading.textContent = 'An engineering assistant for the work around the work.';
-
-const ecosystem = document.createElement('section');
-ecosystem.className = 'ecosystem-strip wrap';
-ecosystem.innerHTML = '<div class="section-label">Built around your real work</div><div class="ecosystem-copy"><h2>Bring the stack you already trust.</h2><p>Relay sits across the engineering ecosystem instead of asking you to replace it.</p></div><div class="ecosystem-list"><span>CAD</span><span>Gmail</span><span>Documents</span><span>Requirements</span><span>Drawings</span><span>Test results</span><span>Engineering playbooks</span></div><p class="ecosystem-note">Connect what is available today. Use Relay’s repository and lifecycle playbooks even when a workspace connector is not yet available.</p>';
-const relaySection = document.querySelector('.relay-section');
-if (relaySection && !document.querySelector('.ecosystem-strip')) relaySection.insertAdjacentElement('afterend', ecosystem);
-
-const howHeading = document.querySelector('.how h2');
-if (howHeading) howHeading.textContent = 'The context follows the engineer.';
-
-const howSteps = [
-  ['Connect the context', 'Bring the tools, files, messages, requirements, and decisions around a project into one working conversation.'],
-  ['Assist the engineer', 'Use Relay as a documentation partner and veteran-style sounding board while you frame, explore, compare, and verify a design.'],
-  ['Build engineering memory', 'Turn decisions, evidence, open questions, and lifecycle lessons into reusable context for the next problem.']
-];
-document.querySelectorAll('.steps .step').forEach((step, index) => {
-  const [title, copy] = howSteps[index] || howSteps[0];
-  step.querySelector('h3').textContent = title;
-  step.querySelector('p').textContent = copy;
-});
-
-const videoSection = document.querySelector('.feature-videos');
-if (videoSection) {
-  videoSection.querySelector('h2').textContent = 'A short film about the engineer’s second brain.';
-  videoSection.querySelector('.video-intro').textContent = 'The story should feel like a veteran engineer joining the project: first connecting to the ecosystem, then helping document the work, then bringing ideas and lifecycle context when the engineer needs a sounding board.';
-  const videoData = [
-    ['Join the ecosystem', 'CAD, Gmail, and documents become one working context.', 'Open on the engineer moving between CAD, an email thread, a requirements document, and a test report. Relay quietly connects the pieces without asking for a new system of record.'],
-    ['Document the work', 'The assistant keeps the engineering story alive.', 'Show Relay turning a design decision into a clear brief: what changed, why it changed, which evidence supports it, what is still open, and who needs to know.'],
-    ['Be the sounding board', 'A veteran perspective appears at the right moment.', 'Show the engineer exploring a design choice. Relay brings relevant lifecycle playbooks, alternatives, failure modes, manufacturing questions, and verification ideas—without pretending to replace judgment.'],
-    ['Keep working without every connector', 'The repository and playbooks still travel with Relay.', 'End with a workspace that cannot connect to one of its tools. Relay still answers from its engineering repository and lifecycle playbooks, then becomes more useful as integrations are added.']
-  ];
-  videoSection.querySelector('.video-grid').innerHTML = videoData.map(([title, screen, direction], i) => `<article class="video-card"><div class="video-placeholder"><span class="scene-number">Scene ${i + 1}</span><span>${screen}</span><small>${direction}</small></div><h3>${title}</h3><p>${direction}</p></article>`).join('');
-}
-
-const faq = document.createElement('section');
-faq.className = 'faq wrap';
-faq.innerHTML = '<div class="section-label">Questions engineers ask</div><div class="faq-heading"><h2>Useful before you connect anything.</h2><p>Relay is designed to be useful on day one, while becoming more valuable as it understands the ecosystem around your work.</p></div><div class="faq-list"><details><summary>What if my CAD, Gmail, or document connector is not available?</summary><p>Relay still works from its own engineering repository and lifecycle playbooks. Connectors make the answers more specific to your project; they are not a prerequisite for getting useful engineering context.</p></details><details><summary>Does Relay replace our systems of record?</summary><p>No. Your CAD, requirements, email, documents, and test systems remain the source of truth. Relay helps you find relationships, carry context, and document decisions across them.</p></details><details><summary>Does Relay make the engineering decision for me?</summary><p>No. Relay can frame a decision, compare options, surface missing evidence, and prepare documentation. The engineer remains responsible for judgment, approval, and consequential design changes.</p></details><details><summary>Where does our engineering data go?</summary><p>Relay is designed to work inside the workspace and access boundaries you control. Your project context is not treated as a public knowledge pool, and the product should make its evidence and source context visible.</p></details></div>';
-const downloadSection = document.querySelector('.download');
-if (downloadSection && !document.querySelector('.faq')) downloadSection.insertAdjacentElement('beforebegin', faq);
-
-document.querySelectorAll('body *').forEach((node) => {
-  if (node.children.length === 0 && /\bMCP server\b/i.test(node.textContent)) node.textContent = node.textContent.replace(/MCP server/gi, 'engineering plugin');
-});
-
-const story = document.querySelector('.relay-story');
-const storySteps = [...document.querySelectorAll('.story-step')];
-const stageCounter = document.querySelector('.stage-counter');
-const stageKicker = document.querySelector('.stage-kicker');
-const stageTitle = document.querySelector('.stage-copy strong');
-const stageNote = document.querySelector('.stage-copy small');
-const stageScreen = document.querySelector('.stage-screen');
-const stageProgress = document.querySelector('.stage-progress span');
-const sceneTitles = ['Your engineering ecosystem, in one conversation.', 'Documentation that keeps up with the design.', 'A veteran perspective at the right moment.', 'Engineering playbooks, even without every connector.'];
-const sceneNotes = ['CAD, Gmail, documents, requirements, and project context come together around the engineer.', 'Decisions, evidence, open questions, and next steps become usable records as the work evolves.', 'Relay surfaces trade-offs, failure modes, and lifecycle questions while the engineer explores the design.', 'The engineering repository and lifecycle playbooks stay useful even when a workspace connector is unavailable.'];
-if (story && storySteps.length) {
-  const activateStoryStep = (activeStep) => {
-    const index = Number(activeStep.dataset.step);
-    storySteps.forEach((step) => {
-      const isActive = step === activeStep;
-      step.classList.toggle('is-active', isActive);
-      step.setAttribute('aria-pressed', String(isActive));
-    });
-    if (stageCounter) stageCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(storySteps.length).padStart(2, '0')}`;
-    if (stageKicker) stageKicker.textContent = `SCENE ${index + 1}`;
-    if (stageTitle) stageTitle.textContent = sceneTitles[index] || sceneTitles[0];
-    if (stageNote) stageNote.textContent = sceneNotes[index] || sceneNotes[0];
-    if (stageScreen) {
-      stageScreen.dataset.scene = String(index);
-      stageScreen.classList.remove('is-switching');
-      requestAnimationFrame(() => stageScreen.classList.add('is-switching'));
-    }
-    if (stageProgress) stageProgress.style.width = `${((index + 1) / storySteps.length) * 100}%`;
-  };
-
-  const storyStepsRail = document.querySelector('.story-steps');
-  storySteps.forEach((step) => {
-    step.tabIndex = 0;
-    step.setAttribute('role', 'button');
-    step.addEventListener('click', () => {
-      activateStoryStep(step);
-      if (window.matchMedia('(max-width: 800px)').matches && storyStepsRail) {
-        storyStepsRail.scrollTo({ left: step.offsetLeft - (storyStepsRail.clientWidth - step.clientWidth) / 2, behavior: 'smooth' });
-      }
-    });
-    step.addEventListener('keydown', (event) => {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      event.preventDefault();
-      activateStoryStep(step);
-    });
-  });
-
-  const isMobileStory = window.matchMedia('(max-width: 800px)').matches;
-  const storyObserver = new IntersectionObserver((entries) => {
-    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible) activateStoryStep(visible.target);
-  }, isMobileStory
-    ? { root: storyStepsRail, threshold: [0.55, 0.75] }
-    : { rootMargin: '-28% 0px -38% 0px', threshold: [0.25, 0.55, 0.8] });
-  storySteps.forEach((step) => storyObserver.observe(step));
-  activateStoryStep(storySteps[0]);
-}
-
-document.querySelectorAll('.case-detail').forEach((detail) => detail.removeAttribute('open'));
+document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = new Date().getFullYear(); });
