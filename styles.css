@@ -66,6 +66,13 @@ main{display:flex;flex-direction:column}
 .privacy-note{border:1px solid #dfe8f4;background:#f6faff;border-radius:14px;padding:16px 18px;margin-top:28px;display:grid;gap:5px;font-size:14px;line-height:1.45}
 .privacy-note strong{color:var(--ink)}
 .privacy-note span{color:var(--muted)}
+.ecosystem-strip{padding-top:92px;padding-bottom:96px}
+.ecosystem-copy{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin:22px 0 34px}
+.ecosystem-copy h2{font:600 clamp(36px,4.5vw,58px)/1.04 'Space Grotesk';letter-spacing:-.05em;margin:0}
+.ecosystem-copy p{color:var(--muted);font-size:18px;line-height:1.55;max-width:420px;margin:0}
+.ecosystem-list{display:flex;flex-wrap:wrap;gap:10px}
+.ecosystem-list span{border:1px solid var(--line);border-radius:999px;padding:11px 15px;color:#4d5056;font-size:13px;background:#fff}
+.ecosystem-note{border-left:2px solid var(--blue);padding-left:16px;color:var(--muted);font-size:14px;line-height:1.55;max-width:690px;margin:28px 0 0}
 .story-step>span:empty{display:none}
 .story-step h3{margin-top:12px}
 .scene-number{font:600 11px 'Space Grotesk';letter-spacing:.14em;text-transform:uppercase;color:#79b9ff}
@@ -84,4 +91,9 @@ main{display:flex;flex-direction:column}
   .video-grid{grid-template-columns:1fr;gap:18px;margin-top:30px}
   .video-placeholder{min-height:205px;aspect-ratio:auto;padding:20px}
   .video-placeholder>span:not(.scene-number){font-size:20px}
+  .ecosystem-strip{padding-top:70px;padding-bottom:72px}
+  .ecosystem-copy{grid-template-columns:1fr;gap:18px;margin-bottom:26px}
+  .ecosystem-copy p{font-size:17px}
+  .ecosystem-list{gap:8px}
+  .ecosystem-list span{padding:9px 12px;font-size:12px}
 }

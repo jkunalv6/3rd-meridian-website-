@@ -69,6 +69,23 @@ if (relayCardTitle) relayCardTitle.textContent = 'An engineering assistant that 
 const relayCardBody = document.querySelector('.relay-card-copy>p');
 if (relayCardBody) relayCardBody.textContent = 'Relay connects to CAD, Gmail, documents, and project context, then helps the engineer carry decisions, evidence, and next steps through the lifecycle. When a connector is unavailable, its own engineering repository and playbooks still give you a useful place to start.';
 
+const ecosystem = document.createElement('section');
+ecosystem.className = 'ecosystem-strip wrap';
+ecosystem.innerHTML = '<div class="section-label">Built around your real work</div><div class="ecosystem-copy"><h2>Bring the stack you already trust.</h2><p>Relay sits across the engineering ecosystem instead of asking you to replace it.</p></div><div class="ecosystem-list"><span>CAD</span><span>Gmail</span><span>Documents</span><span>Requirements</span><span>Drawings</span><span>Test results</span><span>Engineering playbooks</span></div><p class="ecosystem-note">Connect what is available today. Use Relay’s repository and lifecycle playbooks even when a workspace connector is not yet available.</p>';
+const relaySection = document.querySelector('.relay-section');
+if (relaySection && !document.querySelector('.ecosystem-strip')) relaySection.insertAdjacentElement('afterend', ecosystem);
+
+const howSteps = [
+  ['Connect the context', 'Bring the tools, files, messages, requirements, and decisions around a project into one working conversation.'],
+  ['Assist the engineer', 'Use Relay as a documentation partner and veteran-style sounding board while you frame, explore, compare, and verify a design.'],
+  ['Build engineering memory', 'Turn decisions, evidence, open questions, and lifecycle lessons into reusable context for the next problem.']
+];
+document.querySelectorAll('.steps .step').forEach((step, index) => {
+  const [title, copy] = howSteps[index] || howSteps[0];
+  step.querySelector('h3').textContent = title;
+  step.querySelector('p').textContent = copy;
+});
+
 const videoSection = document.querySelector('.feature-videos');
 if (videoSection) {
   videoSection.querySelector('h2').textContent = 'A short film about the engineer’s second brain.';
