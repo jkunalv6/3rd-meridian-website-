@@ -41,21 +41,21 @@ if (storyIntro) {
   storyIntro.innerHTML = '<h2>Relay connects the work around the work.</h2><p>And then it helps with the engineering itself. Start with a natural question, follow the evidence through the design, and keep the decision with the person responsible for it.</p>';
 }
 
-const storySteps = [
+const reviewStorySteps = [
   ['Bring the engineering context together', 'Relay connects the files, requirements, messages, drawings, test results, and prior decisions already scattered across a project. You keep the source systems; Relay makes the relationships usable.'],
   ['Turn a vague problem into a real decision', 'Ask what you are trying to understand in ordinary language. Relay helps frame the decision, separates what is known from what is assumed, and asks only for information that could change the recommendation.'],
   ['Work through the trade-offs', 'Relay can help compare architectures, materials, manufacturing routes, interfaces, and verification paths. It brings the relevant engineering reasoning forward without pretending a screening result is a release decision.'],
   ['Review the change before it travels', 'When a requirement, load, supplier input, or field issue changes, Relay traces the direct impact and prepares a brief. You approve consequential actions, make the engineering judgment, and keep the record of why.']
 ];
 document.querySelectorAll('.story-step').forEach((step, index) => {
-  const [title, copy] = storySteps[index] || storySteps[0];
+  const [title, copy] = reviewStorySteps[index] || reviewStorySteps[0];
   step.querySelector('h3').textContent = title;
   step.querySelector('p').textContent = copy;
 });
 const stageCopy = document.querySelector('.stage-copy');
 if (stageCopy) stageCopy.innerHTML = '<span class="stage-kicker">WORKFLOW</span><strong>From context to an engineering decision.</strong><small>A guided story of how Relay helps without taking control away from the engineer.</small>';
-const stageCounter = document.querySelector('.stage-counter');
-if (stageCounter) stageCounter.textContent = 'Workflow';
+const reviewStageCounter = document.querySelector('.stage-counter');
+if (reviewStageCounter) reviewStageCounter.textContent = 'Workflow';
 
 const privacy = document.querySelector('.relay-card-copy');
 if (privacy && !privacy.querySelector('.privacy-note')) {
@@ -95,8 +95,8 @@ if (story && storySteps.length) {
     if (!visible) return;
     const index = Number(visible.target.dataset.step);
     storySteps.forEach((step) => step.classList.toggle('is-active', step === visible.target));
-    if (stageCounter) stageCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(storySteps.length).padStart(2, '0')}`;
-    if (stageKicker) stageKicker.textContent = `SCENE ${String(index + 1).padStart(2, '0')}`;
+    if (stageCounter) stageCounter.textContent = 'Workflow';
+    if (stageKicker) stageKicker.textContent = 'SCENE';
     if (stageTitle) stageTitle.textContent = sceneTitles[index] || sceneTitles[0];
     if (stageProgress) stageProgress.style.width = `${((index + 1) / storySteps.length) * 100}%`;
   }, { rootMargin: '-35% 0px -45% 0px', threshold: [0.2, 0.5, 0.8] });
