@@ -1,10 +1,10 @@
 # 3rd Meridian submission backend
 
-This is a small Cloudflare Worker + D1 backend. It stores contact submissions and does not send email.
+This is a small Cloudflare Worker + D1 backend. It stores names, work emails, optional phone numbers, messages, and submission timestamps. It does not send email.
 
-## Manual setup when home
+## Setup after the Cloudflare connector and domain are available
 
-1. Install Wrangler and log in to the Cloudflare account.
+1. Connect the Cloudflare account to Codex, or install Wrangler and log in to the Cloudflare account.
 2. Copy `wrangler.toml.example` to `wrangler.toml`.
 3. Create a D1 database named `third-meridian-submissions` and put its returned ID in `wrangler.toml`.
 4. Run `wrangler d1 execute third-meridian-submissions --remote --file=schema.sql`.

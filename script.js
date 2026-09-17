@@ -124,8 +124,11 @@ const storySteps = [...document.querySelectorAll('.story-step')];
 const stageCounter = document.querySelector('.stage-counter');
 const stageKicker = document.querySelector('.stage-kicker');
 const stageTitle = document.querySelector('.stage-copy strong');
+const stageNote = document.querySelector('.stage-copy small');
+const stageScreen = document.querySelector('.stage-screen');
 const stageProgress = document.querySelector('.stage-progress span');
 const sceneTitles = ['Your engineering ecosystem, in one conversation.', 'Documentation that keeps up with the design.', 'A veteran perspective at the right moment.', 'Engineering playbooks, even without every connector.'];
+const sceneNotes = ['CAD, Gmail, documents, requirements, and project context come together around the engineer.', 'Decisions, evidence, open questions, and next steps become usable records as the work evolves.', 'Relay surfaces trade-offs, failure modes, and lifecycle questions while the engineer explores the design.', 'The engineering repository and lifecycle playbooks stay useful even when a workspace connector is unavailable.'];
 if (story && storySteps.length) {
   const activateStoryStep = (activeStep) => {
     const index = Number(activeStep.dataset.step);
@@ -134,22 +137,43 @@ if (story && storySteps.length) {
       step.classList.toggle('is-active', isActive);
       step.setAttribute('aria-pressed', String(isActive));
     });
-    if (stageCounter) stageCounter.textContent = 'Workflow';
-    if (stageKicker) stageKicker.textContent = 'SCENE';
+    if (stageCounter) stageCounter.textContent = `${String(index + 1).padStart(2, '0')} / ${String(storySteps.length).padStart(2, '0')}`;
+    if (stageKicker) stageKicker.textContent = `SCENE ${index + 1}`;
     if (stageTitle) stageTitle.textContent = sceneTitles[index] || sceneTitles[0];
+    if (stageNote) stageNote.textContent = sceneNotes[index] || sceneNotes[0];
+    if (stageScreen) {
+      stageScreen.dataset.scene = String(index);
+      stageScreen.classList.remove('is-switching');
+      requestAnimationFrame(() => stageScreen.classList.add('is-switching'));
+    }
     if (stageProgress) stageProgress.style.width = `${((index + 1) / storySteps.length) * 100}%`;
   };
 
+  const storyStepsRail = document.querySelector('.story-steps');
   storySteps.forEach((step) => {
     step.tabIndex = 0;
     step.setAttribute('role', 'button');
-    step.addEventListener('click', () => activateStoryStep(step));
+    step.addEventListener('click', () => {
+      activateStoryStep(step);
+      if (window.matchMedia('(max-width: 800px)').matches && storyStepsRail) {
+        storyStepsRail.scrollTo({ left: step.offsetLeft - (storyStepsRail.clientWidth - step.clientWidth) / 2, behavior: 'smooth' });
+      }
+    });
     step.addEventListener('keydown', (event) => {
       if (event.key !== 'Enter' && event.key !== ' ') return;
       event.preventDefault();
       activateStoryStep(step);
     });
   });
+
+  const isMobileStory = window.matchMedia('(max-width: 800px)').matches;
+  const storyObserver = new IntersectionObserver((entries) => {
+    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible) activateStoryStep(visible.target);
+  }, isMobileStory
+    ? { root: storyStepsRail, threshold: [0.55, 0.75] }
+    : { rootMargin: '-28% 0px -38% 0px', threshold: [0.25, 0.55, 0.8] });
+  storySteps.forEach((step) => storyObserver.observe(step));
   activateStoryStep(storySteps[0]);
 }
 
