@@ -8,5 +8,5 @@ database_name = "third-meridian-submissions"
 database_id = "501441d2-923c-4e90-80a3-6d53cc2df9a5"
 
 [vars]
-ALLOWED_ORIGIN = "https://third-meridian-site.third-meridian.workers.dev"
+ALLOWED_ORIGIN = "https://3rdmeridiantech.com"
 # Set ADMIN_TOKEN as a secret with: wrangler secret put ADMIN_TOKEN

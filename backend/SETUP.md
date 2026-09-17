@@ -4,7 +4,8 @@ This is a small Cloudflare Worker + D1 backend. It stores names, work emails, op
 
 ## Current Cloudflare deployment
 
-- Website and API: `https://third-meridian-site.third-meridian.workers.dev`
+- Primary website and API: `https://3rdmeridiantech.com` (pending nameserver activation)
+- Temporary fallback: `https://third-meridian-site.third-meridian.workers.dev`
 - Worker: `third-meridian-site`
 - D1 database: `third-meridian-submissions`
 - Public form endpoint: `POST /api/contact`
@@ -12,7 +13,7 @@ This is a small Cloudflare Worker + D1 backend. It stores names, work emails, op
 
 The website and contact backend are now hosted entirely on Cloudflare. GitHub remains the source repository only; its Pages deployment workflows have been removed.
 
-The remaining production step is attaching the purchased custom domain to the Worker.
+The custom domain is attached to the Worker. The remaining activation step is changing the GoDaddy nameservers to the two nameservers assigned by Cloudflare.
 
 ## Recreating the backend manually
 
