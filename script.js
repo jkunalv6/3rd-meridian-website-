@@ -38,14 +38,14 @@ document.querySelectorAll('.story-step > span').forEach((step) => { step.textCon
 
 const storyIntro = document.querySelector('.relay-story .story-intro');
 if (storyIntro) {
-  storyIntro.innerHTML = '<h2>Relay connects the work around the work.</h2><p>And then it helps with the engineering itself. Start with a natural question, follow the evidence through the design, and keep the decision with the person responsible for it.</p>';
+  storyIntro.innerHTML = '<h2>Relay joins the ecosystem you already use.</h2><p>It connects to CAD, Gmail, documents, and project context—then works beside the engineer as a documentation partner, context finder, and sounding board throughout the design lifecycle.</p>';
 }
 
 const reviewStorySteps = [
-  ['Bring the engineering context together', 'Relay connects the files, requirements, messages, drawings, test results, and prior decisions already scattered across a project. You keep the source systems; Relay makes the relationships usable.'],
-  ['Turn a vague problem into a real decision', 'Ask what you are trying to understand in ordinary language. Relay helps frame the decision, separates what is known from what is assumed, and asks only for information that could change the recommendation.'],
-  ['Work through the trade-offs', 'Relay can help compare architectures, materials, manufacturing routes, interfaces, and verification paths. It brings the relevant engineering reasoning forward without pretending a screening result is a release decision.'],
-  ['Review the change before it travels', 'When a requirement, load, supplier input, or field issue changes, Relay traces the direct impact and prepares a brief. You approve consequential actions, make the engineering judgment, and keep the record of why.']
+  ['Merge into the ecosystem', 'Relay brings CAD, Gmail, documents, requirements, drawings, test results, and project conversations into one working context. It does not ask the engineer to rebuild the workspace somewhere else.'],
+  ['Take care of the documentation', 'As the engineer works, Relay turns decisions, changes, evidence, and open questions into usable documentation. It helps prepare briefs, update records, and keep the story of the design from getting lost.'],
+  ['Sound like a veteran in the room', 'Relay brings relevant lifecycle playbooks, engineering patterns, trade-offs, and questions to the moment. Think of it as a veteran mechanical engineer you can consult while you are still exploring the problem.'],
+  ['Keep helping when connectors are missing', 'If a CAD, Gmail, or document connector is not available in a workspace, Relay still has its own repository of engineering knowledge and lifecycle playbooks. The ecosystem makes it richer; it is not the only source of value.']
 ];
 document.querySelectorAll('.story-step').forEach((step, index) => {
   const [title, copy] = reviewStorySteps[index] || reviewStorySteps[0];
@@ -53,7 +53,7 @@ document.querySelectorAll('.story-step').forEach((step, index) => {
   step.querySelector('p').textContent = copy;
 });
 const stageCopy = document.querySelector('.stage-copy');
-if (stageCopy) stageCopy.innerHTML = '<span class="stage-kicker">WORKFLOW</span><strong>From context to an engineering decision.</strong><small>A guided story of how Relay helps without taking control away from the engineer.</small>';
+if (stageCopy) stageCopy.innerHTML = '<span class="stage-kicker">RELAY IN THE WORKSPACE</span><strong>Your engineering assistant, inside the work.</strong><small>Connect the ecosystem, document the journey, and keep a veteran sounding board close at every stage.</small>';
 const reviewStageCounter = document.querySelector('.stage-counter');
 if (reviewStageCounter) reviewStageCounter.textContent = 'Workflow';
 
@@ -64,16 +64,20 @@ if (privacy && !privacy.querySelector('.privacy-note')) {
   note.innerHTML = '<strong>Your engineering data stays private.</strong><span>Relay is a connector to your controlled workspace, not a public data pool. Your project context stays where you keep it and is used to answer your request.</span>';
   privacy.appendChild(note);
 }
+const relayCardTitle = document.querySelector('.relay-card-copy h3');
+if (relayCardTitle) relayCardTitle.textContent = 'An engineering assistant that fits into the ecosystem you already have.';
+const relayCardBody = document.querySelector('.relay-card-copy>p');
+if (relayCardBody) relayCardBody.textContent = 'Relay connects to CAD, Gmail, documents, and project context, then helps the engineer carry decisions, evidence, and next steps through the lifecycle. When a connector is unavailable, its own engineering repository and playbooks still give you a useful place to start.';
 
 const videoSection = document.querySelector('.feature-videos');
 if (videoSection) {
-  videoSection.querySelector('h2').textContent = 'A short film about how engineering context moves.';
-  videoSection.querySelector('.video-intro').textContent = 'This is the video plan: four short scenes that make Relay understandable before anyone has to learn the vocabulary.';
+  videoSection.querySelector('h2').textContent = 'A short film about the engineer’s second brain.';
+  videoSection.querySelector('.video-intro').textContent = 'The story should feel like a veteran engineer joining the project: first connecting to the ecosystem, then helping document the work, then bringing ideas and lifecycle context when the engineer needs a sounding board.';
   const videoData = [
-    ['The problem', 'A mounting change arrives in a message.', 'Open on a busy engineering desk: CAD, a requirement, a test result, and a chat window. The message is simple: “The mounting requirement changed.”'],
-    ['The question', 'The engineer asks what it affects.', 'Cut to the engineer asking in plain language. Show Relay finding the current revision, the source requirement, and the first affected interface.'],
-    ['The engineering', 'The decision becomes a trade-off.', 'Show a calm comparison: stiffen the bracket, change the material, or change the process. Surface the missing load case and the verification needed before anyone claims certainty.'],
-    ['The handoff', 'The engineer decides what happens next.', 'End with the change brief: evidence, impact, open question, next action. The engineer approves the documentation and keeps responsibility for the design decision.']
+    ['Join the ecosystem', 'CAD, Gmail, and documents become one working context.', 'Open on the engineer moving between CAD, an email thread, a requirements document, and a test report. Relay quietly connects the pieces without asking for a new system of record.'],
+    ['Document the work', 'The assistant keeps the engineering story alive.', 'Show Relay turning a design decision into a clear brief: what changed, why it changed, which evidence supports it, what is still open, and who needs to know.'],
+    ['Be the sounding board', 'A veteran perspective appears at the right moment.', 'Show the engineer exploring a design choice. Relay brings relevant lifecycle playbooks, alternatives, failure modes, manufacturing questions, and verification ideas—without pretending to replace judgment.'],
+    ['Keep working without every connector', 'The repository and playbooks still travel with Relay.', 'End with a workspace that cannot connect to one of its tools. Relay still answers from its engineering repository and lifecycle playbooks, then becomes more useful as integrations are added.']
   ];
   videoSection.querySelector('.video-grid').innerHTML = videoData.map(([title, screen, direction], i) => `<article class="video-card"><div class="video-placeholder"><span class="scene-number">Scene ${i + 1}</span><span>${screen}</span><small>${direction}</small></div><h3>${title}</h3><p>${direction}</p></article>`).join('');
 }
