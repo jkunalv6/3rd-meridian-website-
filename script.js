@@ -78,6 +78,22 @@ videoTabs.forEach((tab) => tab.addEventListener('click', () => {
   videoPanels.forEach((panel) => { panel.hidden = panel.dataset.videoPanel !== target; });
 }));
 
+const workflowTabs = [...document.querySelectorAll('[data-workflow-tab]')];
+const workflowPanels = [...document.querySelectorAll('[data-workflow-panel]')];
+workflowTabs.forEach((tab) => tab.addEventListener('click', () => {
+  const target = tab.dataset.workflowTab;
+  workflowTabs.forEach((item) => {
+    const active = item === tab;
+    item.classList.toggle('is-active', active);
+    item.setAttribute('aria-selected', String(active));
+  });
+  workflowPanels.forEach((panel) => {
+    const active = panel.dataset.workflowPanel === target;
+    panel.classList.toggle('is-active', active);
+    panel.hidden = !active;
+  });
+}));
+
 document.querySelectorAll('.case-file').forEach((item) => {
   item.addEventListener('toggle', () => {
     if (!item.open) return;
