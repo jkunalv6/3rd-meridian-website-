@@ -5,6 +5,10 @@ if (!location.hash) {
 }
 
 const header = document.querySelector('[data-header]');
+document.querySelectorAll('img[src="chatgpt-brand.png"], img[src="claude-brand.png"]').forEach((image) => {
+  image.parentElement?.classList.add(image.src.includes('chatgpt') ? 'platform-chatgpt' : 'platform-claude');
+  image.remove();
+});
 const menuToggle = document.querySelector('[data-menu-toggle]');
 const mobileMenu = document.querySelector('[data-mobile-menu]');
 function closeMenu() {
