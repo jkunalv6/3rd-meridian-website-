@@ -12,6 +12,8 @@ const assetDefinitions = [
   ['/styles.css', 'styles.css', 'text/css; charset=utf-8', 'public, max-age=3600'],
   ['/script.js', 'script.js', 'text/javascript; charset=utf-8', 'public, max-age=3600'],
   ['/3rd-meridian-logo.png', '3rd-meridian-logo.png', 'image/png', 'public, max-age=604800'],
+  ['/chatgpt-brand.png', 'chatgpt-brand.png', 'image/png', 'public, max-age=604800'],
+  ['/claude-brand.png', 'claude-brand.png', 'image/png', 'public, max-age=604800'],
   ['/robots.txt', 'robots.txt', 'text/plain; charset=utf-8', 'public, max-age=3600'],
   ['/sitemap.xml', 'sitemap.xml', 'application/xml; charset=utf-8', 'public, max-age=3600'],
   ['/site.webmanifest', 'site.webmanifest', 'application/manifest+json; charset=utf-8', 'public, max-age=3600']
@@ -73,8 +75,8 @@ export default {
       const email = String(payload.email || '').trim().slice(0, 240);
       const phone = String(payload.phone || '').trim().slice(0, 80);
       const message = String(payload.message || '').trim().slice(0, 5000);
-      if (!name || !email || !message || !/^\\S+@\\S+\\.\\S+$/.test(email)) {
-        return json({ error: 'Please provide a valid name, email, and message.' }, 400, corsHeaders);
+      if (!name || !email || !phone || phone.length < 7 || !message || !/^\\S+@\\S+\\.\\S+$/.test(email)) {
+        return json({ error: 'Please provide a valid name, email, phone number, and message.' }, 400, corsHeaders);
       }
       await env.DB.prepare("INSERT INTO contact_submissions (name, email, phone, message, created_at) VALUES (?, ?, ?, ?, datetime('now'))")
         .bind(name, email, phone || null, message)
