@@ -217,3 +217,15 @@
   .enterprise-contact-head p{font-size:19px}.enterprise-contact .contact-copy>p{font-size:16px}.enterprise-process li b{font-size:14px}.enterprise-process li span{font-size:13px}
   .form-invitation{font-size:14px!important}.contact-panel label{font-size:11px}.form-note,.form-status{font-size:12px}.footer-brand p,.site-footer nav a{font-size:13px}.footer-brand small{font-size:11px}
 }
+
+/* Desktop microcopy must remain readable at normal viewing distance. */
+@media(min-width:861px){
+  .relay-mode summary>span{font-size:12px;line-height:1.35;letter-spacing:.09em}
+  .relay-mode summary b{font-size:22px}
+  .integrations .availability-badge{font-size:13px!important}
+  .integrations .integration-heading>p:last-child{font-size:17px;line-height:1.55}
+  .marketplace-privacy b{font-size:17px}.marketplace-privacy p{font-size:15px;line-height:1.5}.marketplace-privacy a{font-size:14px}
+  .access-card small{font-size:15px}.access-status{font-size:12px!important;line-height:1.4;letter-spacing:.04em}
+  .install-guide summary{font-size:15px}.product-links{font-size:14px;line-height:1.5}.product-links>span:first-child{font-size:14px}
+  .written-install>b{font-size:18px}.written-install li{font-size:14px}.written-install>p{font-size:13px}
+}
