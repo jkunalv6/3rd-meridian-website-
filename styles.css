@@ -203,3 +203,17 @@
 
 /* Desktop marketplace dashboard: explanation and privacy share one compact row. */
 @media(min-width:861px){.integrations{padding:34px 0 38px}.integrations .section-shell{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr);gap:14px 22px}.integrations .integration-heading{grid-column:1;display:grid;grid-template-columns:1fr;gap:8px;padding:0}.integrations .integration-heading .availability-badge{grid-column:1;margin:0 0 4px!important}.integrations .integration-heading h2{font-size:48px;line-height:.98}.integrations .integration-heading>p:last-child{max-width:680px;font-size:14px;line-height:1.45}.integrations .marketplace-privacy{grid-column:2;align-self:stretch;padding:16px 18px}.integrations .integration-links,.integrations .product-links{grid-column:1/-1}.integrations .integration-links{margin-top:2px}.integrations .product-links{padding-top:10px}}
+
+/* Desktop reading size. Mobile and tablet typography remains unchanged. */
+@media(min-width:861px){
+  .relay-explain .relay-lead{font-size:19px;line-height:1.6}
+  .relay-setup li b{font-size:15px}.relay-setup li small{font-size:13px}.relay-setup>a{font-size:13px}
+  .comparison-card li{font-size:15px}.comparison-card>b{font-size:12px}.comparison-sources b{font-size:13px}
+  .relay-mode summary p,.relay-privacy{font-size:14px}.workflow-panel-intro p{font-size:15px}.workflow-panel-intro li{font-size:13px}.video-caption{font-size:11px}
+  .integrations .integration-heading>p:last-child{font-size:16px;line-height:1.55}.marketplace-privacy b{font-size:16px}.marketplace-privacy p{font-size:14px}.marketplace-privacy a{font-size:13px}
+  .access-card small{font-size:13px}.access-status{font-size:10px!important}.install-guide summary{font-size:13px}.product-links{font-size:12px}
+  .field-heading p{font-size:19px}.case-disclaimer{font-size:14px}.use-case summary span{font-size:10px}.case-card b{font-size:13px}
+  .trust-heading p{font-size:18px}.trust-grid p,.trust-note{font-size:15px}.trust-grid h3{font-size:22px}
+  .enterprise-contact-head p{font-size:19px}.enterprise-contact .contact-copy>p{font-size:16px}.enterprise-process li b{font-size:14px}.enterprise-process li span{font-size:13px}
+  .form-invitation{font-size:14px!important}.contact-panel label{font-size:11px}.form-note,.form-status{font-size:12px}.footer-brand p,.site-footer nav a{font-size:13px}.footer-brand small{font-size:11px}
+}
