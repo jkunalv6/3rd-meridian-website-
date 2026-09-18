@@ -66,6 +66,18 @@ function activateChapter(chapter) {
 
 chapters.forEach((chapter) => chapter.addEventListener('click', () => activateChapter(chapter)));
 
+const videoTabs = [...document.querySelectorAll('[data-video-tab]')];
+const videoPanels = [...document.querySelectorAll('[data-video-panel]')];
+videoTabs.forEach((tab) => tab.addEventListener('click', () => {
+  const target = tab.dataset.videoTab;
+  videoTabs.forEach((item) => {
+    const active = item === tab;
+    item.classList.toggle('is-active', active);
+    item.setAttribute('aria-selected', String(active));
+  });
+  videoPanels.forEach((panel) => { panel.hidden = panel.dataset.videoPanel !== target; });
+}));
+
 document.querySelectorAll('.case-file').forEach((item) => {
   item.addEventListener('toggle', () => {
     if (!item.open) return;
