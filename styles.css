@@ -311,6 +311,17 @@
 /* Full-bleed Relay section: keep its content aligned without exposing body side rails. */
 .relay-section{width:100%;max-width:none;padding-left:max(32px,calc((100vw - var(--max))/2));padding-right:max(32px,calc((100vw - var(--max))/2))}
 @media(max-width:560px){.relay-section{padding-left:16px;padding-right:16px}}
+@media(max-width:560px){
+  .relay-section{
+    width:100%;
+    max-width:none;
+    margin-left:0;
+    margin-right:0;
+    overflow:hidden;
+    clip-path:none;
+    box-shadow:none
+  }
+}
 .integration-links .marketplace-logo{display:none!important;visibility:hidden!important;width:0!important;height:0!important;margin:0!important;padding:0!important}
 .integration-card>a.access-chatgpt:before,.integration-card>a.access-claude:before{font:600 clamp(30px,3vw,42px)/.95 'Barlow Semi Condensed',Arial,sans-serif;letter-spacing:-.035em;margin-bottom:12px}
 @media(max-width:560px){.integration-card>a.access-chatgpt:before,.integration-card>a.access-claude:before{font-size:32px;margin-bottom:9px}}
