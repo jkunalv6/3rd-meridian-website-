@@ -72,17 +72,39 @@ function activateChapter(chapter) {
 
 chapters.forEach((chapter) => chapter.addEventListener('click', () => activateChapter(chapter)));
 
-const videoTabs = [...document.querySelectorAll('[data-video-tab]')];
-const videoPanels = [...document.querySelectorAll('[data-video-panel]')];
-videoTabs.forEach((tab) => tab.addEventListener('click', () => {
-  const target = tab.dataset.videoTab;
-  videoTabs.forEach((item) => {
-    const active = item === tab;
-    item.classList.toggle('is-active', active);
-    item.setAttribute('aria-selected', String(active));
+document.querySelectorAll('[data-video-switcher]').forEach((switcher) => {
+  const tabs = [...switcher.querySelectorAll('[data-video-tab]')];
+  const panels = [...switcher.querySelectorAll('[data-video-panel]')];
+  const activate = (tab) => {
+    const target = tab.dataset.videoTab;
+    tabs.forEach((item) => {
+      const active = item === tab;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-selected', String(active));
+      item.setAttribute('tabindex', active ? '0' : '-1');
+    });
+    panels.forEach((panel) => {
+      const active = panel.dataset.videoPanel === target;
+      panel.classList.toggle('is-active', active);
+      panel.hidden = !active;
+    });
+  };
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => activate(tab));
+    tab.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      let nextIndex = index;
+      if (event.key === 'ArrowRight') nextIndex = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') nextIndex = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') nextIndex = 0;
+      if (event.key === 'End') nextIndex = tabs.length - 1;
+      tabs[nextIndex].focus();
+      activate(tabs[nextIndex]);
+    });
   });
-  videoPanels.forEach((panel) => { panel.hidden = panel.dataset.videoPanel !== target; });
-}));
+  if (tabs[0]) activate(tabs.find((tab) => tab.classList.contains('is-active')) || tabs[0]);
+});
 
 const workflowTabs = [...document.querySelectorAll('[data-workflow-tab]')];
 const workflowPanels = [...document.querySelectorAll('[data-workflow-panel]')];
