@@ -86,12 +86,25 @@ workflowTabs.forEach((tab) => tab.addEventListener('click', () => {
     const active = item === tab;
     item.classList.toggle('is-active', active);
     item.setAttribute('aria-selected', String(active));
+    item.setAttribute('tabindex', active ? '0' : '-1');
   });
   workflowPanels.forEach((panel) => {
     const active = panel.dataset.workflowPanel === target;
     panel.classList.toggle('is-active', active);
     panel.hidden = !active;
   });
+}));
+
+workflowTabs.forEach((tab, index) => tab.addEventListener('keydown', (event) => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+  event.preventDefault();
+  let nextIndex = index;
+  if (event.key === 'ArrowRight') nextIndex = (index + 1) % workflowTabs.length;
+  if (event.key === 'ArrowLeft') nextIndex = (index - 1 + workflowTabs.length) % workflowTabs.length;
+  if (event.key === 'Home') nextIndex = 0;
+  if (event.key === 'End') nextIndex = workflowTabs.length - 1;
+  workflowTabs[nextIndex]?.focus();
+  workflowTabs[nextIndex]?.click();
 }));
 
 document.querySelectorAll('.case-file').forEach((item) => {
@@ -109,11 +122,16 @@ const isLocalPreview = location.protocol === 'file:' || ['localhost', '127.0.0.1
 
 if (isLocalPreview) {
   const note = contactForm?.querySelector('.form-note');
-  if (note) note.textContent = 'Local preview: submitting will open an email draft. Production saves inquiries securely.';
+  if (note) note.textContent = 'Local preview: submitting opens an email draft. On the live site, the enquiry is sent to 3rd Meridian for review.';
 }
 
 contactForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
+  if (!contactForm.checkValidity()) {
+    contactForm.reportValidity();
+    if (contactStatus) contactStatus.textContent = 'Please complete every field with valid information before sending.';
+    return;
+  }
   const button = contactForm.querySelector('button[type="submit"]');
   const formData = new FormData(contactForm);
   const original = button.innerHTML;
@@ -135,7 +153,7 @@ contactForm?.addEventListener('submit', async (event) => {
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || 'Unable to send your inquiry.');
     contactForm.reset();
-    if (contactStatus) contactStatus.textContent = 'Inquiry received. We’ll be in touch.';
+    if (contactStatus) contactStatus.textContent = 'Inquiry received. We will review the deployment details and reply using the contact information provided.';
   } catch (error) {
     if (contactStatus) contactStatus.textContent = error.message || 'Unable to send right now. Please try again.';
   } finally {
@@ -145,3 +163,21 @@ contactForm?.addEventListener('submit', async (event) => {
 });
 
 document.querySelectorAll('[data-year]').forEach((node) => { node.textContent = new Date().getFullYear(); });
+// Replace values here when final product links and videos are available.
+// Keeping external assets in one place avoids rebuilding page sections.
+const RELAY_ASSETS = Object.freeze({
+  productRepository: null,
+  licenseUrl: null,
+  installationGuideUrl: null,
+  supportUrl: null,
+  marketplace: { chatgpt: null, claude: null },
+  videos: {
+    assistantChatgpt: null,
+    assistantClaude: null,
+    veteranChatgpt: null,
+    veteranClaude: null,
+    installChatgpt: null,
+    installClaude: null,
+    privateDeployment: null,
+  },
+});
