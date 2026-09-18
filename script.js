@@ -1,3 +1,9 @@
+if (!location.hash) {
+  history.scrollRestoration = 'manual';
+  requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }));
+  window.addEventListener('pageshow', () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' }), { once: true });
+}
+
 const header = document.querySelector('[data-header]');
 const menuToggle = document.querySelector('[data-menu-toggle]');
 const mobileMenu = document.querySelector('[data-mobile-menu]');
