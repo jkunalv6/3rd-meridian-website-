@@ -153,7 +153,7 @@ contactForm?.addEventListener('submit', async (event) => {
     const result = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(result.error || 'Unable to send your inquiry.');
     contactForm.reset();
-    if (contactStatus) contactStatus.textContent = 'Inquiry received. We will review the deployment details and reply using the contact information provided.';
+    if (contactStatus) contactStatus.textContent = "Thanks for getting in touch. We'll review your project and reply using the contact details you provided.";
   } catch (error) {
     if (contactStatus) contactStatus.textContent = error.message || 'Unable to send right now. Please try again.';
   } finally {
@@ -181,3 +181,58 @@ const RELAY_ASSETS = Object.freeze({
     privateDeployment: null,
   },
 });
+
+function assetValue(path) {
+  return path.split('.').reduce((value, key) => value?.[key], RELAY_ASSETS) || null;
+}
+
+function videoEmbedUrl(url) {
+  try {
+    const parsed = new URL(url, location.href);
+    if (parsed.hostname.includes('youtube.com') && parsed.searchParams.get('v')) return `https://www.youtube-nocookie.com/embed/${parsed.searchParams.get('v')}`;
+    if (parsed.hostname === 'youtu.be') return `https://www.youtube-nocookie.com/embed/${parsed.pathname.slice(1)}`;
+    if (parsed.hostname.includes('vimeo.com') && !parsed.hostname.startsWith('player.')) return `https://player.vimeo.com/video/${parsed.pathname.split('/').filter(Boolean).pop()}`;
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function renderConfiguredVideo(container, url) {
+  if (!container || !url) return;
+  const title = container.dataset.videoTitle || 'Relay tutorial';
+  const embedUrl = videoEmbedUrl(url);
+  const media = embedUrl ? document.createElement('iframe') : document.createElement('video');
+  media.className = 'configured-video';
+  media.setAttribute('title', title);
+  if (embedUrl) {
+    media.src = embedUrl;
+    media.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    media.allowFullscreen = true;
+    media.loading = 'lazy';
+  } else {
+    media.src = url;
+    media.controls = true;
+    media.preload = 'metadata';
+  }
+  container.replaceChildren(media);
+  container.classList.add('has-configured-video');
+  container.removeAttribute('role');
+  container.removeAttribute('aria-label');
+}
+
+document.querySelectorAll('[data-asset-link]').forEach((link) => {
+  const url = assetValue(link.dataset.assetLink);
+  if (!url) return;
+  link.href = url;
+  link.target = '_blank';
+  link.rel = 'noopener noreferrer';
+  link.removeAttribute('aria-disabled');
+  const readyLabel = link.dataset.readyLabel;
+  if (readyLabel) link.textContent = readyLabel;
+  link.querySelector('.access-status')?.replaceChildren('Open marketplace');
+});
+
+const workflowVideoKeys = ['videos.assistantChatgpt', 'videos.assistantClaude', 'videos.veteranChatgpt', 'videos.veteranClaude'];
+document.querySelectorAll('.workflow-video-screen').forEach((container, index) => renderConfiguredVideo(container, assetValue(workflowVideoKeys[index])));
+document.querySelectorAll('[data-asset-video]').forEach((container) => renderConfiguredVideo(container, assetValue(container.dataset.assetVideo)));
