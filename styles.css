@@ -229,3 +229,9 @@
   .install-guide summary{font-size:15px}.product-links{font-size:14px;line-height:1.5}.product-links>span:first-child{font-size:14px}
   .written-install>b{font-size:18px}.written-install li{font-size:14px}.written-install>p{font-size:13px}
 }
+
+/* Remove decorative eyebrow spacing and strengthen the enterprise discovery block. */
+.relay-setup h3{margin-top:0}.trust-heading{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:end}.trust-heading h2{max-width:680px}.trust-heading p{grid-column:2}.enterprise-contact-head h2{margin-top:0}
+.enterprise-contact .contact-copy h3{font-size:36px;line-height:1.08}.enterprise-contact .contact-copy>p{max-width:620px;font-size:18px;line-height:1.65}.enterprise-contact .enterprise-process{margin-top:32px}.enterprise-contact .enterprise-process li{grid-template-columns:32px .7fr 1.3fr;gap:16px;padding:16px 0}.enterprise-contact .enterprise-process li:before{font-size:11px}.enterprise-contact .enterprise-process li b{font-size:17px}.enterprise-contact .enterprise-process li span{font-size:15px;line-height:1.5}
+@media(max-width:980px){.trust-heading{grid-template-columns:1fr}.trust-heading p{grid-column:1}.enterprise-contact .contact-copy h3{font-size:32px}}
+@media(max-width:560px){.enterprise-contact .contact-copy h3{font-size:29px}.enterprise-contact .contact-copy>p{font-size:16px}.enterprise-contact .enterprise-process li{grid-template-columns:28px 1fr;gap:5px 12px;padding:14px 0}.enterprise-contact .enterprise-process li b{font-size:16px}.enterprise-contact .enterprise-process li span{grid-column:2;font-size:14px}}
